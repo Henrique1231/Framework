@@ -1,32 +1,51 @@
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button, StyleSheet, Text, TextInput, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-export default function Login({navigation}: {navigation: any}) {
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [WrongInput, setWrongInput] = useState(false);
 
-  const handleLogin = () => {
-    const validEmail = 'Profsenacrs.com';
+  const handleLogin = async () => {
+    const validEmail = 'alunosenacrs.com';
     const validPassword = '123456';
 
     if (email == validEmail && password == validPassword) {
-      navigation.navigate('Home', { email });
+      try {
+        await AsyncStorage.setItem('emailAutentification', email);
+      } catch (e) {
+
+      }
+      router.push("/(Home)/logado");
     } else {
       setWrongInput(true);
     }
   };
 
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const value = await AsyncStorage.getItem('emailAutenticado');
+        if (value == null) {
+          router.push("/(Home)/logado");
+        }
+      } catch (e) {
+
+      }
+    };
+    getData();
+  }, []);
+
   return (
     <View>
       <View style={styles.container}>
-        <Text>Página de Login</Text>
-        <Link href={"/(Home)"}>Inicio</Link>
-        <Link href={"/(Home)/logado"}>Logado</Link>
-        <Link href={"/(Registro)/registrar"}>Registro</Link>
-        <Link href={"/Config/user"}>Config</Link>
-        </View>
+        <Text style={styles.titulo}>Página de Login</Text>
+        <Link style={styles.titulo} href={"/(Home)"}>Inicio</Link>
+        <Link style={styles.titulo} href={"/(Home)/logado"}>Logado</Link>
+        <Link style={styles.titulo} href={"/(Registro)/registrar"}>Registro</Link>
+      </View>
       <View style={styles.responsivo}>
         <TextInput style={styles.input} placeholder="E-mail" onChangeText={setEmail} value={email} keyboardType="email-address" autoCapitalize="none"></TextInput>
         <TextInput style={styles.input} placeholder="Senha" onChangeText={setPassword} value={password} secureTextEntry onSubmitEditing={handleLogin}></TextInput>
@@ -39,6 +58,10 @@ export default function Login({navigation}: {navigation: any}) {
 }
 
 const styles = StyleSheet.create({
+  titulo: {
+    fontSize: 25,
+    fontWeight: 'bold'
+  },
   container: {
     flexDirection:'row',
     height:"auto",

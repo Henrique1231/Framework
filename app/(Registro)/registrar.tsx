@@ -3,7 +3,7 @@ import {Button, StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useState } from "react";
 
 export default function Login({navigation}: {navigation: any}) {
-    const [text, onChangeText] = React.useState('Campo já preenchido');
+    const [text, onChangeText] = React.useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
   
@@ -14,10 +14,9 @@ export default function Login({navigation}: {navigation: any}) {
   return (
     <View>
       <View style={styles.container}>
-        <Text>Página de Registro</Text>
-        <Link href={"/(Home)"}>Inicio</Link>
-        <Link href={"/(Home)/logado"}>Logado</Link>
-        <Link href={"/Config/user"}>Config</Link>
+        <Text style={styles.titulo}>Página de Registro</Text>
+        <Link style={styles.titulo} href={"/(Home)"}>Inicio</Link>
+        <Link style={styles.titulo} href={"/(Home)/logado"}>Logado</Link>
       </View>
       <View style={styles.responsivo}>
         <TextInput style={styles.input} placeholder="E-mail" onChangeText={setEmail} value={email} keyboardType="email-address" autoCapitalize="none"></TextInput>
@@ -30,6 +29,10 @@ export default function Login({navigation}: {navigation: any}) {
 }
 
 const styles = StyleSheet.create({
+  titulo: {
+    fontSize: 25,
+    fontWeight: 'bold'
+  },
   container: {
     flexDirection:'row',
     height:"auto",
