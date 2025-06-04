@@ -1,0 +1,7 @@
+{
+  "perguntas": [
+    { "id": "1", "pergunta": "Pergunta do Aluno 1", "resposta": "Resposta do Aluno 1" },
+    { "id": "2", "pergunta": "Pergunta do Aluno 2", "resposta": "Resposta do Aluno 2" },
+    { "id": "3", "pergunta": "Pergunta do Aluno 3", "resposta": "Resposta do Aluno 3" }
+  ]
+}

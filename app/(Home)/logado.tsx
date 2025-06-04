@@ -1,7 +1,34 @@
 import { Link } from "expo-router";
 import {StyleSheet, Text, View, Image} from "react-native";
+import axios from 'axios';
+import { useEffect, useState } from "react";
 
 export default function Logado() {
+
+  const [perguntas, setPerguntas] = useState([]);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const response = await axios.get("http://localhost:3000/perguntas");
+    setPerguntas(response.data);
+  }
+
+  const renderQuestions = () => {
+    perguntas.map(pergunta => {
+      <Link 
+        href={{
+          pathname: `/Itens/[${pergunta.id}]`,
+          params: { id: pergunta.id },
+          }}>
+          {pergunta.pergunta}
+        </Link>
+    });
+  };
+  
+
   return (
     <View>
       <View style={styles.container}>
@@ -18,27 +45,7 @@ export default function Logado() {
         <Text style={styles.responsivo3}>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo ea numquam at doloremque nemo incidunt omnis odit, ducimus asperiores, sapiente impedit officiis velit. Expedita amet eaque quisquam rerum, aliquam illum.</Text>
       </View>
       <View style={styles.responsivo}>
-        <Link 
-        href={{
-          pathname: '/Itens/[id]',
-          params: { id: 'aula' },
-          }}>
-          Pergunta do Aluno
-        </Link>
-        <Link
-        href={{
-          pathname: '/Itens/[id]',
-          params: { id: 'online' },
-          }}>
-          Pergunta do Aluno
-        </Link>
-        <Link
-        href={{
-          pathname: '/Itens/[id]',
-          params: { id: 'presencial' },
-        }}>
-        Pergunta do Aluno
-        </Link>
+        {renderQuestions()}
       </View>
     </View>
   );
