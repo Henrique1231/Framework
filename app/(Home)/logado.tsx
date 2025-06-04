@@ -3,9 +3,15 @@ import {StyleSheet, Text, View, Image} from "react-native";
 import axios from 'axios';
 import { useEffect, useState } from "react";
 
+type Perguntas = {
+  id: string;
+  pergunta: string;
+  resposta: string;
+}
+
 export default function Logado() {
 
-  const [perguntas, setPerguntas] = useState([]);
+  const [perguntas, setPerguntas] = useState<Perguntas[]>([]);
 
   useEffect(() => {
     getData();
@@ -17,14 +23,15 @@ export default function Logado() {
   }
 
   const renderQuestions = () => {
-    perguntas.map(pergunta => {
+    return perguntas.map((pergunta) => {
       <Link 
+        key={pergunta.id}
         href={{
-          pathname: `/Itens/[${pergunta.id}]`,
+          pathname: `/Itens/[id]`,
           params: { id: pergunta.id },
-          }}>
-          {pergunta.pergunta}
-        </Link>
+        }}>
+        {pergunta.pergunta}
+      </Link>
     });
   };
   
