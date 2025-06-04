@@ -24,7 +24,7 @@ export default function Logado() {
 
   const renderQuestions = () => {
     return perguntas.map((pergunta) => {
-      <Link 
+      return <Link 
         key={pergunta.id}
         href={{
           pathname: `/Itens/[id]`,
